@@ -1,41 +1,34 @@
-lambdas = [350:10:700]';
+load("radiances_25000.mat");
+r = radiances_25000;
 
-lambdaMax = 500;
-lamb = LambNomogram(lambdas,lambdaMax);
+load("S_cone.mat");
+load("M_cone.mat");
+load("L_cone.mat");
+load("Q_cone.mat");
 
-self_screen = @(lamb) 1-10.^(-0.5.*lamb);
-macTrans = MacularTransmittance(lambdas, 'Human', 'CIE');
-lensTrans = LensTransmittance(lambdas, 'Human', 'CIE');
+data_points = zeros(255, 335, 4);
 
-S_cone = self_screen(LambNomogram(lambdas,426)) .* macTrans .* lensTrans;
-M_cone = self_screen(LambNomogram(lambdas,530)) .* macTrans .* lensTrans;
-L_cone = self_screen(LambNomogram(lambdas,555)) .* macTrans .* lensTrans;
-Q_cone1 = self_screen(LambNomogram(lambdas,538)) .* macTrans .* lensTrans;
-Q_cone2 = self_screen(LambNomogram(lambdas,542.5)) .* macTrans .* lensTrans;
-Q_cone3 = self_screen(LambNomogram(lambdas,547)) .* macTrans .* lensTrans;
+for i = 1:255
+    for j = 1:335
+         data_points(i, j, 1) = sum(squeeze(r(i, j, :))' .* L_cone);
+         data_points(i, j, 2) = sum(squeeze(r(i, j, :))' .* M_cone);
+         data_points(i, j, 3) = sum(squeeze(r(i, j, :))' .* S_cone);
+         data_points(i, j, 4) = sum(squeeze(r(i, j, :))' .* Q_cone2);
+    end
+end
 
-x = 350:10:700;
-fig1 = figure;
-plot(x, S_cone, 'blue', x, M_cone, 'green', x, L_cone, 'red', x, Q_cone1, 'yellow');
-saveas(fig1,'LMSQ1.png');
-ylim([0.0 1.0]);
-xlim([350 700]);
+save('data_points.mat', 'data_points');
 
-fig2 = figure;
-plot(x, S_cone, 'blue', x, M_cone, 'green', x, L_cone, 'red', x, Q_cone2, 'yellow');
-saveas(fig2,'LMSQ2.png');
-ylim([0.0 1.0]);
-xlim([350 700]);
+L = reshape(data_points(:, :, 1).', 1, []);
+M = reshape(data_points(:, :, 2).', 1, []);
+S = reshape(data_points(:, :, 3).', 1, []);
+Q = reshape(data_points(:, :, 4).', 1, []);
 
-fig3 = figure;
-plot(x, S_cone, 'blue', x, M_cone, 'green', x, L_cone, 'red', x, Q_cone3, 'yellow');
-saveas(fig3,'LMSQ3.png');
-ylim([0.0 1.0]);
-xlim([350 700]);
-
-load("scene3/ref_mosteiro4bb_reg1.mat")
-data_points = zeros(1018, 1267, 4);
-for i = 1:33
-    
-      
-    
+hold on;
+scatter(L(1:200), M(1:200));
+xlabel("L");
+ylabel("M");
+oh
+% scatter(L(1:200), Q(1:200));
+% scatter(Q(1:200), M(1:200));
+% scatter(L(1:200), S(1:200));

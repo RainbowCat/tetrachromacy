@@ -1,0 +1,30 @@
+load(L_data)
+figure();
+hold on;
+scatter(L(1:200), M(1:200));
+xlabel("L");
+ylabel("M");
+hold off;
+
+figure();
+hold on;
+scatter(L(1:200), Q(1:200));
+xlabel("L");
+ylabel("Q");
+hold off;
+
+figure();
+hold on;
+scatter(L(1:200), S(1:200));
+xlabel("L");
+ylabel("S");
+hold off;
+
+figure();
+hold on;
+scatter(Q(1:200), M(1:200));
+xlabel("Q");
+ylabel("M");
+hold off;
+
+
