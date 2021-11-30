@@ -46,7 +46,7 @@ for s = [1, 2, 3, 4, 6, 7, 8]
     scatter(L(1:500), Q(1:500));
     xlabel("L");
     ylabel("Q");
-    saveas(fig1, strcat(name, '_L-Q.png'));
+    saveas(fig2, strcat(name, '_L-Q.png'));
     hold off;
     
     fig3 = figure();
@@ -54,7 +54,7 @@ for s = [1, 2, 3, 4, 6, 7, 8]
     scatter(L(1:500), S(1:500));
     xlabel("L");
     ylabel("S");
-    saveas(fig1, strcat(name, '_L-S.png'));
+    saveas(fig3, strcat(name, '_L-S.png'));
     hold off;
     
     fig4 = figure();
@@ -62,7 +62,7 @@ for s = [1, 2, 3, 4, 6, 7, 8]
     scatter(M(1:500), Q(1:500));
     xlabel("M");
     ylabel("Q");
-    saveas(fig1, strcat(name, '_M-Q.png'));
+    saveas(fig4, strcat(name, '_M-Q.png'));
     hold off;
     
     L_log = log10(L) - mean(log10(L));
