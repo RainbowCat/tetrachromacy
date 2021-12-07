@@ -12,11 +12,13 @@
 
 coeff_mean = zeros(4, 4);
 
-for i = [1,2,3,4,6,7,8]
-    name = strcat("scene", int2str(i), "_coeff.mat");
-    load(name); 
-    coeff_mean = coeff_mean + coeff;
+for lambda = 400:30:700
+    for i = [1,2,3,4,6,7,8]
+        name = strcat("scene", int2str(i), "_coeff_", int2str(lambda), ".mat");
+        load(name); 
+        coeff_mean = coeff_mean + coeff;
+    end
+    
+    coeff_mean = coeff_mean / 7.0;
+    save(strcat('coeff_mean_', int2str(lambda), '.mat'), "coeff_mean");
 end
-
-coeff_mean = coeff_mean / 7.0;
-save('coeff_mean.mat', "coeff_mean");
